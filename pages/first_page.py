@@ -76,16 +76,15 @@ def main():
         #Clarifai credentials
         st.subheader( "Add your OPENAI API")
         api = st.text_input("CLARIFAI PAT " , type='password')
-    if not clarifai_pat:
+    if not api:
         st.warning("PLease enter api to continue")
     else:
         client = OpenAI(api_key=api)
-    if (st.button("Submit")) and Question:
-      with st.spinner("Wait... Generating response..."):
-        response = main1(client, Question)
+        if (st.button("Submit")) and Question:
+          with st.spinner("Wait... Generating response..."):
+            response = main1(client, Question)
         if response:
-          for role, message in response.items():
-              with st.chat_message(role):
-                  st.markdown(message)
+            for role, message in response.items():
+                st.markdown(message)
 if __name__ == '__main__':
     main()
