@@ -22,15 +22,15 @@ st.title("Clarifai NextGen Nexus App")
 message_before = {}
 def main1(client,prompt):
     assistantId = "asst_oteb8wHPdYVFZgkAGZP6fp3l"
-    '''
+    
     #Creating an assistant
-        assistant = client.beta.assistants.create(
-        name="Math Tutor",
-        instructions="You are a personal math tutor. Write and run code to answer math questions.",
-        tools=[{"type": "code_interpreter"}],
-        model="gpt-3.5-turbo"
-    )
-    '''
+    #    assistant = client.beta.assistants.create(
+    #    name="Math Tutor",
+    #    instructions="You are a personal math tutor. Write and run code to answer math questions.",
+    #    tools=[{"type": "code_interpreter"}],
+    #    model="gpt-3.5-turbo"
+    #)
+    
     #Creating a Thread
     thread = client.beta.threads.create()
     
@@ -75,16 +75,16 @@ def main():
     with st.sidebar:
         #Clarifai credentials
         st.subheader( "Add your OPENAI API")
-        api = st.text_input("CLARIFAI PAT " , type='password')
+        api = st.text_input("API : " , type='password')
     if not api:
         st.warning("PLease enter api to continue")
     else:
+        response = ""
         client = OpenAI(api_key=api)
         if (st.button("Submit")) and Question:
-          with st.spinner("Wait... Generating response..."):
-            response = main1(client, Question)
-        if response:
+          response = main1(client, Question)
+        if response != "":
             for role, message in response.items():
-                st.markdown(message)
+                st.markdown(role + " : " + message)
 if __name__ == '__main__':
     main()
